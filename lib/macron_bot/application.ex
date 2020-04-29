@@ -6,9 +6,13 @@ defmodule MacronBot.Application do
   use Application
 
   def start(_type, _args) do
+    # import Supervisor.Spec, warn: false
+
+    token = ExGram.Config.get(:ex_gram, :token)
+
     children = [
-      # Starts a worker by calling: MacronBot.Worker.start_link(arg)
-      # {MacronBot.Worker, arg}
+      ExGram,
+      {MacronBot, [method: :polling, token: token]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
